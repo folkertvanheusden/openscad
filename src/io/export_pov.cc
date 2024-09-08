@@ -48,7 +48,8 @@ void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& outpu
   double tsd_z = 0;
   size_t avg_n = 0;
 
-  for (const auto &t : ps->indices) {
+  for (size_t pi=0; pi<ps->indices.size(); pi++) {
+    const auto &t = ps->indices.at(pi);
     output << "polygon { " << t.size() + 1 << ", \n";
     for (size_t i=0; i<t.size(); i++) {
       if (i)
@@ -65,6 +66,7 @@ void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& outpu
     output << ", <" << ps->vertices[t.at(0)].x() << ", " << ps->vertices[t.at(0)].y() << ", " << ps->vertices[t.at(0)].z() << ">";
     output << "\n";
     output << "texture { pigment { color rgb <" << 1.0 << ", " << 1.0 << ", " << 1.0 << "> } }\n";
+    output << "// " << ps->color_indices[pi] << "\n";
     output << "}\n";
   }
 
