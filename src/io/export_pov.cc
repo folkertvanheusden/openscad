@@ -29,7 +29,16 @@
 #include "PolySet.h"
 #include "PolySetUtils.h"
 
-#include <stdlib.h>
+
+double clamp_color(const double v)
+{
+  if (v < 0)
+    return 0;
+  if (v > 1)
+    return 1;
+  return v;
+}
+
 void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& output)
 {
   auto ps = PolySetUtils::getGeometryAsPolySet(geom);
@@ -66,20 +75,22 @@ void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& outpu
       tsd_z += ps->vertices[t.at(i)].z() * ps->vertices[t.at(i)].z();
       avg_n++;
     }
-    double r = 1.0, g = 1.0, b = 1.0, a = 1.0;
+    double r = 1.0, g = 1.0, b = 1.0, a = 0.0;
     if (has_color) {
       auto color_index = ps->color_indices[pi];
       if (color_index >= 0) {
         auto color = ps->colors[color_index];
-        r = color[0];
-        g = color[1];
-        b = color[2];
-        a = color[3];
+        r = clamp_color(color[0]);
+        g = clamp_color(color[1]);
+        b = clamp_color(color[2]);
+        a = clamp_color(1.0 - color[3]);
       }
     }
+    if (r == 0 && g == 0 && b == 0)  // work around for black objects in 5185
+      g = 1.0;
     output << ", <" << ps->vertices[t.at(0)].x() << ", " << ps->vertices[t.at(0)].y() << ", " << ps->vertices[t.at(0)].z() << ">";
     output << "\n";
-    output << "texture { pigment { color rgb <" << r << ", " << g << ", " << b << "> } }\n";  // TODO alpha
+    output << "texture { pigment { color rgbf <" << r << ", " << g << ", " << b << ", " << a << "> } }\n";
     output << "}\n";
   }
 
@@ -101,5 +112,9 @@ void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& outpu
   output << "light_source { <" <<  l_x << ", " << -l_y << ", " <<  l_z << "> color rgb <1, 1, 1> }\n";
   output << "light_source { <" <<  l_x << ", " <<  l_y << ", " << -l_z << "> color rgb <1, 1, 1> }\n";
 
-  output << "camera { look_at <" << center_x << ", " << center_y << ", " << center_z << "> location <" << center_x + dist * 10 << ", " << center_y + dist * 10 << ", " << center_z + dist * 10 << "> }\n";
+  double camera_x = center_x + sd_x * 10;
+  double camera_y = center_y + sd_y * 10;
+  double camera_z = center_z + sd_z * 10;
+
+  output << "camera { look_at <" << center_x << ", " << center_y << ", " << center_z << "> location <" << camera_x << ", " << camera_y << ", " << camera_z << "> sky <0, 0, 1> rotate <0, 0, 90> }\n";
 }
