@@ -32,13 +32,16 @@
 #include <stdlib.h>
 void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& output)
 {
-  // FIXME: In lazy union mode, should we export multiple IndexedFaceSets?
   auto ps = PolySetUtils::getGeometryAsPolySet(geom);
   if (Feature::ExperimentalPredictibleOutput.is_enabled()) {
     ps = createSortedPolySet(*ps);
   }
 
   output << "// hello povray!\n\n";
+
+  auto has_color = Feature::ExperimentalRenderColors.is_enabled() && !ps->color_indices.empty();
+  if (has_color)
+	  output << "// with colors\n\n";
 
   double avg_x = 0;
   double avg_y = 0;
@@ -63,10 +66,20 @@ void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& outpu
       tsd_z += ps->vertices[t.at(i)].z() * ps->vertices[t.at(i)].z();
       avg_n++;
     }
+    double r = 1.0, g = 1.0, b = 1.0, a = 1.0;
+    if (has_color) {
+      auto color_index = ps->color_indices[pi];
+      if (color_index >= 0) {
+        auto color = ps->colors[color_index];
+        r = color[0];
+        g = color[1];
+        b = color[2];
+        a = color[3];
+      }
+    }
     output << ", <" << ps->vertices[t.at(0)].x() << ", " << ps->vertices[t.at(0)].y() << ", " << ps->vertices[t.at(0)].z() << ">";
     output << "\n";
-    output << "texture { pigment { color rgb <" << 1.0 << ", " << 1.0 << ", " << 1.0 << "> } }\n";
-    output << "// " << ps->color_indices[pi] << "\n";
+    output << "texture { pigment { color rgb <" << r << ", " << g << ", " << b << "> } }\n";  // TODO alpha
     output << "}\n";
   }
 
