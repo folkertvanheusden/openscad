@@ -103,7 +103,7 @@ void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& outpu
   double sd_z = sqrt(tsd_z / avg_n - pow(center_z, 2.));
   double dist = pow(sd_x * sd_x + sd_y * sd_y + sd_z * sd_z, 1/3.);
 
-  double l_x = center_x + dist * 5;
+  double l_x = center_x + dist * 5;  // '5' is chosen arbitrarily
   double l_y = center_y + dist * 5;
   double l_z = center_z + dist * 5;
 
@@ -112,9 +112,9 @@ void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& outpu
   output << "light_source { <" <<  l_x << ", " << -l_y << ", " <<  l_z << "> color rgb <1, 1, 1> }\n";
   output << "light_source { <" <<  l_x << ", " <<  l_y << ", " << -l_z << "> color rgb <1, 1, 1> }\n";
 
-  double camera_x = center_x + sd_x * 10;
-  double camera_y = center_y + sd_y * 10;
-  double camera_z = center_z + sd_z * 10;
+  double camera_x = center_x + sd_x * 5;  // '5' is chosen arbitrarily
+  double camera_y = center_y + sd_y * 5;
+  double camera_z = center_z + sd_z * 5;
 
   output << "camera { look_at <" << center_x << ", " << center_y << ", " << center_z << "> location <" << camera_x << ", " << camera_y << ", " << camera_z << "> sky <0, 0, 1> rotate <0, 0, 90> }\n";
 }
