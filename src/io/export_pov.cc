@@ -91,6 +91,7 @@ void export_pov(const std::shared_ptr<const Geometry>& geom, std::ostream& outpu
     output << ", <" << ps->vertices[t.at(0)].x() << ", " << ps->vertices[t.at(0)].y() << ", " << ps->vertices[t.at(0)].z() << ">";
     output << "\n";
     output << "texture { pigment { color rgbf <" << r << ", " << g << ", " << b << ", " << a << "> } }\n";
+    output << "finish { specular 0.5 roughness 0.001 reflection{0 0.63 fresnel} ambient 0 diffuse 0.6 conserve_energy } interior{ior 1.32}\n";
     output << "}\n";
   }
 
