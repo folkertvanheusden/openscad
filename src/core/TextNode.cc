@@ -82,7 +82,7 @@ std::string TextNode::toString() const
   return STR(name(), "(", this->params, ")");
 }
 
-std::string TextNode::povray() const {
+std::pair<std::string, bool> TextNode::povray() const {
   std::ostringstream stream;
   std::string font = params.get_font();
   if (font.empty())
@@ -93,7 +93,7 @@ std::string TextNode::povray() const {
 	  " " << params.get_size() << "," <<
 	  " " << params.get_spacing() <<
 	  " }";
-  return stream.str();
+  return { stream.str(), true };
 }
 
 void register_builtin_text()

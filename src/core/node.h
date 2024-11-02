@@ -51,7 +51,7 @@ public:
   }
   size_t index() const { return this->idx; }
 
-  virtual std::string povray() const { return "// TODO " + name() + "\n"; }
+  virtual std::pair<std::string, bool> povray() const { return { "// TODO " + name() + "\n", false }; }
 
   static void resetIndexCounter() { idx_counter = 1; }
 

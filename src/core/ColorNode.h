@@ -12,7 +12,7 @@ public:
   ColorNode(const ModuleInstantiation *mi) : AbstractNode(mi), color(-1.0f, -1.0f, -1.0f, 1.0f) { }
   std::string toString() const override;
   std::string name() const override;
-  std::string povray() const override;
+  std::pair<std::string, bool> povray() const override;
 
   Color4f color;
 };

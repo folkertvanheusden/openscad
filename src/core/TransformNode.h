@@ -14,7 +14,7 @@ public:
   std::string toString() const override;
   std::string name() const override;
   std::string verbose_name() const override;
-  std::string povray() const override;
+  std::pair<std::string, bool> povray() const override;
   Transform3d matrix;
 
 private:
