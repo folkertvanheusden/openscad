@@ -2751,8 +2751,8 @@ void MainWindow::actionDisplayAST()
 
 void MainWindow::actionDisplayCSGTree()
 {
-  extern void emit_tree_to_pov(AbstractNode *const node);
-  emit_tree_to_pov(&(*this->root_node));
+  extern void emit_tree_to_pov(AbstractNode *const node, const Camera *const camera);
+  emit_tree_to_pov(&(*this->root_node), &qglview->cam);
   setCurrentOutput();
   auto e = new QTextEdit(this);
   e->setAttribute(Qt::WA_DeleteOnClose);
