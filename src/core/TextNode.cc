@@ -87,11 +87,12 @@ std::pair<std::string, AbstractNode::povray_type_t> TextNode::povray() const {
   std::string font = params.get_font();
   if (font.empty())
 	  font = "timrom.ttf";
+  int size = params.get_size();
   stream << "text {" <<
 	  " ttf \"" << font << "\"" <<
 	  " \"" << params.get_text() << "\"" <<
-	  " " << params.get_size() << "," <<
-	  " " << params.get_spacing() <<
+	  " 0.1, 0 " <<
+	  " scale <" << size << ", " << size << ", " << size << "> " <<
 	  " }\n";
   return { stream.str(), PR_object };
 }
