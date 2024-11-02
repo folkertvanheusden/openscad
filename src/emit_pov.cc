@@ -5,7 +5,7 @@
 
 void emit_objects(AbstractNode *const node)
 {
-	std::vector<std::pair<std::string, bool> > converted_nodes;
+	std::vector<std::pair<std::string, AbstractNode::povray_type_t> > converted_nodes;
 
 	std::vector<AbstractNode *> nodes;
 	nodes.push_back(node);
@@ -23,15 +23,20 @@ void emit_objects(AbstractNode *const node)
 
 	// object
 	for(auto & node: converted_nodes) {
-		if (node.second == true)
+		if (node.second == AbstractNode::PR_object)
 			printf("%s", node.first.c_str());
 	}
 
 	// modifiers
+	bool has_color = false;
 	for(auto & node: converted_nodes) {
-		if (node.second == false)
+		if (node.second != AbstractNode::PR_object)
 			printf("%s", node.first.c_str());
+		has_color |= node.second == AbstractNode::PR_attribute_color;
 	}
+
+	if (!has_color)
+		printf("pigment { color rgbf <1, 1, 0, 0> }\n");
 
 	printf("}\n");
 }

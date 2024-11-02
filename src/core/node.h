@@ -51,7 +51,8 @@ public:
   }
   size_t index() const { return this->idx; }
 
-  virtual std::pair<std::string, bool> povray() const { return { "// TODO " + name() + "\n", false }; }
+  enum povray_type_t { PR_object, PR_attribute_general, PR_attribute_color, PR_miscellaneous };
+  virtual std::pair<std::string, AbstractNode::povray_type_t> povray() const { return { "// TODO " + name() + "\n", PR_miscellaneous }; }
 
   static void resetIndexCounter() { idx_counter = 1; }
 

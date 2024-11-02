@@ -280,11 +280,11 @@ std::string ColorNode::toString() const
   return STR("color([", this->color[0], ", ", this->color[1], ", ", this->color[2], ", ", this->color[3], "])");
 }
 
-std::pair<std::string, bool> ColorNode::povray() const
+std::pair<std::string, AbstractNode::povray_type_t> ColorNode::povray() const
 {
   std::ostringstream stream;
   stream << "pigment { color rgbf <" << this->color[0] << ", " << this->color[1] << ", " << this->color[2] << ", " << 1. - this->color[3] << "> }\n";
-  return { stream.str(), false };
+  return { stream.str(), PR_attribute_color };
 }
 
 std::string ColorNode::name() const

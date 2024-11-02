@@ -246,7 +246,7 @@ std::string TransformNode::toString() const
   return stream.str();
 }
 
-std::pair<std::string, bool> TransformNode::povray() const
+std::pair<std::string, AbstractNode::povray_type_t> TransformNode::povray() const
 {
   std::ostringstream stream;
 
@@ -263,7 +263,7 @@ std::pair<std::string, bool> TransformNode::povray() const
 
   stream << "translate <" << this->matrix(0, 3) << ", " << this->matrix(1, 3) << ", " << this->matrix(2, 3) << ">\n";
 
-  return { stream.str(), false };
+  return { stream.str(), PR_attribute_general };
 }
 
 TransformNode::TransformNode(const ModuleInstantiation *mi, std::string verbose_name) :

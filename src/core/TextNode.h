@@ -17,7 +17,7 @@ public:
 
   std::string toString() const override;
   std::string name() const override { return "text"; }
-  std::pair<std::string, bool> povray() const override;
+  std::pair<std::string, AbstractNode::povray_type_t> povray() const override;
 
   virtual std::vector<std::shared_ptr<const Geometry>> createGeometryList() const;
 
