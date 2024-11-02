@@ -92,7 +92,7 @@ std::pair<std::string, bool> TextNode::povray() const {
 	  " \"" << params.get_text() << "\"" <<
 	  " " << params.get_size() << "," <<
 	  " " << params.get_spacing() <<
-	  " }";
+	  " }\n";
   return { stream.str(), true };
 }
 
