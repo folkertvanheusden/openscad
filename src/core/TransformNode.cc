@@ -246,6 +246,22 @@ std::string TransformNode::toString() const
   return stream.str();
 }
 
+std::string TransformNode::povray() const
+{
+  std::ostringstream stream;
+
+  stream << "matrix <";
+  for (int j = 0; j < 4; ++j) {
+    for (int i = 0; i < 4; ++i)
+      stream << this->matrix(j, i) << ", ";
+    stream << std::endl;
+    if (j != 3) stream << ", ";
+  }
+  stream << ">";
+
+  return stream.str();
+}
+
 TransformNode::TransformNode(const ModuleInstantiation *mi, std::string verbose_name) :
   AbstractNode(mi),
   matrix(Transform3d::Identity()),
