@@ -252,12 +252,16 @@ std::string TransformNode::povray() const
 
   stream << "matrix <";
   for (int j = 0; j < 4; ++j) {
-    for (int i = 0; i < 4; ++i)
-      stream << this->matrix(j, i) << ", ";
-    stream << std::endl;
-    if (j != 3) stream << ", ";
+    for (int i = 0; i < 3; ++i) {
+      stream << this->matrix(j, i);
+      if (j != 3 || i != 2)
+        stream << ", ";
+    }
+    stream << "\n";
   }
-  stream << ">";
+  stream << ">\n";
+
+  stream << "translate <" << this->matrix(0, 3) << ", " << this->matrix(1, 3) << ", " << this->matrix(2, 3) << ">\n";
 
   return stream.str();
 }

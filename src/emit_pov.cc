@@ -12,11 +12,11 @@ void emit_tree_to_pov_children(AbstractNode *const node)
 		auto current = nodes.front();
 		nodes.erase(nodes.begin());
 
-		for(auto & c: current->getChildren())
-			nodes.push_back(&*c);
-
 		printf("// %s\n", current->verbose_name().c_str());
 		printf("%s\n", current->povray().c_str());
+
+		for(auto & c: current->getChildren())
+			nodes.push_back(&*c);
 	}
 }
 
