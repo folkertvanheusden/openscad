@@ -82,6 +82,20 @@ std::string TextNode::toString() const
   return STR(name(), "(", this->params, ")");
 }
 
+std::string TextNode::povray() const {
+  std::ostringstream stream;
+  std::string font = params.get_font();
+  if (font.empty())
+	  font = "timrom.ttf";
+  stream << "text {" <<
+	  " ttf \"" << font << "\"" <<
+	  " \"" << params.get_text() << "\"" <<
+	  " " << params.get_size() << "," <<
+	  " " << params.get_spacing() <<
+	  " }";
+  return stream.str();
+}
+
 void register_builtin_text()
 {
   Builtins::init("text", new BuiltinModule(builtin_text),

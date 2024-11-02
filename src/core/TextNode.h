@@ -17,6 +17,7 @@ public:
 
   std::string toString() const override;
   std::string name() const override { return "text"; }
+  std::string povray() const override;
 
   virtual std::vector<std::shared_ptr<const Geometry>> createGeometryList() const;
 

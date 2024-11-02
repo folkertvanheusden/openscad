@@ -735,6 +735,7 @@ endif()
 # NOTE: To keep HEADLESS builds working, do NOT add Qt-dependent sources here,
 #       see GUI_SOURCES list below for that.
 set(CORE_SOURCES
+  src/emit_pov.cc
   src/Feature.cc
   src/FontCache.cc
   src/LibraryInfo.cc

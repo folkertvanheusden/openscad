@@ -51,6 +51,8 @@ public:
   }
   size_t index() const { return this->idx; }
 
+  virtual std::string povray() const { return "-"; }
+
   static void resetIndexCounter() { idx_counter = 1; }
 
   // FIXME: Make protected

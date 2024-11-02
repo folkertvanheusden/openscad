@@ -50,6 +50,28 @@ public:
   }
   std::string name() const override { return "cube"; }
   std::unique_ptr<const Geometry> createGeometry() const override;
+  std::string povray() const override {
+    std::ostringstream stream;
+    if (center) {
+	    stream << "box { <"
+		   << x -0.5 << ", "
+		   << y -0.5 << ", "
+		   << z -0.5 << ">, <"
+		   << x +0.5 << ", "
+		   << y +0.5 << ", "
+		   << z +0.5 << "> } ";
+    }
+    else {
+	    stream << "box { <"
+		   << x  << ", "
+		   << y  << ", "
+		   << z  << ">, <"
+		   << x +1 << ", "
+		   << y +1 << ", "
+		   << z +1 << "> } ";
+    }
+    return stream.str();
+  }
 
   double x = 1, y = 1, z = 1;
   bool center = false;
@@ -73,6 +95,11 @@ public:
   }
   std::string name() const override { return "sphere"; }
   std::unique_ptr<const Geometry> createGeometry() const override;
+  std::string povray() const override {
+    std::ostringstream stream;
+    stream << "sphere { <0, 0, 0>, " << r << "}";
+    return stream.str();
+  }
 
   double fn, fs, fa;
   double r = 1;

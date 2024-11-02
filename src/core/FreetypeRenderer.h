@@ -45,8 +45,14 @@ public:
     void set_size(double size) {
       this->size = size;
     }
+    double get_size() const {
+      return size;
+    }
     void set_spacing(double spacing) {
       this->spacing = spacing;
+    }
+    double get_spacing() const {
+      return spacing;
     }
     void set_fn(double fn) {
       this->fn = fn;
@@ -63,8 +69,14 @@ public:
     void set_text(const std::string& text) {
       this->text = text;
     }
+    std::string get_text() const {
+      return text;
+    }
     void set_font(const std::string& font) {
       this->font = font;
+    }
+    std::string get_font() const {
+      return font;
     }
     void set_direction(const std::string& direction) {
       this->direction = direction;
